@@ -1,5 +1,5 @@
 node_modules
-src/firebaseCongif.js
+src/firebaseConfig.js
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
