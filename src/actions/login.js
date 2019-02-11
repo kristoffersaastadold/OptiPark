@@ -12,14 +12,7 @@ export const createUser = (email,password) => async dispatch => {
             email:email,
             username:email.split("@")[0],
             uid:curr.uid,
-        })
-        dispatch({            
-            type:'CURRENT-USER',
-            payload:[{
-                uid:curr.uid,
-            },true]
-        })
-        
+        })        
     }).then(()=>{
         let curr = auth.currentUser;
         dispatch({
@@ -30,6 +23,12 @@ export const createUser = (email,password) => async dispatch => {
                 uid:curr.uid,
             }
         })        
+    })
+    .then(()=>{
+        dispatch({            
+            type:'LOGIN',
+            payload:true,
+        })
     })
     .catch(() =>{
         console.log('create error');
@@ -49,10 +48,9 @@ export const signInUser = (email,password) => async dispatch => {
         
     })
     .then(()=>{
-        let curr = auth.currentUser;
         dispatch({
-            type:'CURRENT-USER',
-            payload:[{uid:curr.uid},true]
+            type:'LOGIN',
+            payload:true
         })
     }) 
     }).catch(() =>{
@@ -63,8 +61,12 @@ export const signInUser = (email,password) => async dispatch => {
 export const signOutUser = () => async dispatch => {
     auth.signOut().then(()=>{
         dispatch({
-            type:'CURRENT-USER',
-            payload:[{},false],
+            type:'LOGIN',
+            payload:false,
+        })
+        dispatch({
+            type:'USER-IFNO',
+            payload:{},
         })
     })
     .catch(() =>{
