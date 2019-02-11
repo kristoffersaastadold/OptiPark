@@ -17,16 +17,16 @@ let defaultState = {
 export default (state = {defaultState}, action) => {
 
   switch(action.type) {
-    case 'USER-INFO':    
+    
+    case 'USER-INFO':   
       return {
         ...state,
         userInfo:action.payload
       };
-    case 'CURRENT-USER':
+    case 'LOGIN':      
       return {
         ...state,
-        currUser:action.payload[0],
-        login:action.payload[1]
+        login:action.payload
       };
     case 'GET-GEO':
       return{

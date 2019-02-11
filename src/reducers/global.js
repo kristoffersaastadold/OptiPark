@@ -1,5 +1,5 @@
 let defaultState = {
-    selectedSpot: "",
+    selected: {},
 }
 
 const global = (state = defaultState, action) => {
@@ -7,8 +7,9 @@ const global = (state = defaultState, action) => {
         case 'SET-SELECTED':
             return{
                 ...state,
-                selectedSpot:action.payload,
+                selected:action.payload,
             }
+        
         default:        
             return state;
     }
