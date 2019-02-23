@@ -39,7 +39,7 @@
             "type":"sensor",
             "properties": {
                 "status":0,
-                "floor":1
+                "floor":1,
             },
             "geometry":{
                 "type":"Point",

@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
-import data from "./data";
+import database from "./database";
 import global from "./global"
 
 export default combineReducers({
-  data,
+  database,
   global
 });

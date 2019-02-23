@@ -35,8 +35,7 @@ export const createUser = (email,password) => async dispatch => {
     });
 }
 
-export const signInUser = (email,password) => async dispatch => {
-
+export const signInUser = (email,password) => async dispatch => {    
     auth.signInWithEmailAndPassword(email, password)
     .then(()=>{
         userRef.child(auth.currentUser.uid).once("value")
