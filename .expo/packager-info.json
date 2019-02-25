@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://v5-kuq.anonymous.optipark.exp.direct",
+  "packagerNgrokUrl": "https://packager.v5-kuq.anonymous.optipark.exp.direct",
+  "ngrokPid": 11700,
   "devToolsPort": 19002,
-  "packagerPort": null,
-  "packagerPid": null
+  "packagerPort": 19001,
+  "packagerPid": 4136
 }

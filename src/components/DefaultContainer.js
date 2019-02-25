@@ -21,11 +21,13 @@ class DefaultContainer extends Component{
     componentWillMount(){
         this.props.getGeo();
     }
+    componentDidUpdate(){
+        console.log(this.props);
+        
+    }
 
     printProp = () => {
-        console.log("test");
-        
-        console.log(this.props);
+        navigate
     }
 
     handleEmail = (e) =>{
@@ -42,6 +44,7 @@ class DefaultContainer extends Component{
 
     signIn = () => {        
         this.props.signInUser(this.state.email,this.state.password)
+        this.props.navigation.navigate('Main');
         this.setState({
             email:"",
             password:""
@@ -49,47 +52,39 @@ class DefaultContainer extends Component{
     }
 
     render(){        
+        
         return(
-            <>
-            <Button onPress={this.printProp} title="props"/>
-            <Text>{this.props.login?"in":"out"}</Text>
-            <Text>Test</Text>
-            <Input 
-                placeholder="email" 
-                onChange={this.handleEmail}
-                leftIcon={
-                    <Icon
-                      name='user'
-                      size={24}
-                      color='black'
-                    />
-                }
-                
-            />
-            <Input 
-                placeholder="password" 
-                onChange={this.handlePassword}
-                secureTextEntry={true}
-                leftIcon={
-                    <Icon
-                      name='lock'
-                      size={24}
-                      color='black'
-                    />
-                }
-            />
-            <Button
-                onPress={this.signIn}
-                title="PressMe"
-                accessibilityLabel="Press this"
-            />
-            {this.props.userInfo!=null&&this.props.login?                
-                Object.keys(this.props.userInfo.cars).map((item)=>
-                    <Text>{this.props.userInfo.cars[item].type}</Text>
-                )
-                :
-                null}
-            </>
+            <View>
+                <Input 
+                    placeholder="email" 
+                    onChange={this.handleEmail}
+                    autoCapitalize = 'none'
+                    value = {this.state.email}
+                    leftIcon={
+                        <Icon
+                        name='user'
+                        size={24}
+                        color='black'
+                        />
+                    }
+                    
+                />
+                <Input 
+                    placeholder="password" 
+                    onChange={this.handlePassword}
+                    secureTextEntry={true}
+                    autoCapitalize = 'none'
+                    value = {this.state.password}
+                    leftIcon={
+                        <Icon
+                        name='lock'
+                        size={24}
+                        color='black'
+                        />
+                    }
+                />
+                <Button onPress={this.signIn} title="Login"/>
+            </View>
         );
     }
 
@@ -111,3 +106,17 @@ const mapDispatchToProps = (dispatch) => {
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(DefaultContainer);
+
+
+
+
+
+//Styles
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });

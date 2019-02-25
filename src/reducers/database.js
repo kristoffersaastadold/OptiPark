@@ -23,7 +23,7 @@ export default (state = {defaultState}, action) => {
         ...state,
         userInfo:action.payload
       };
-    case 'LOGIN':      
+    case 'LOGIN':        
       return {
         ...state,
         login:action.payload
