@@ -1,74 +1,97 @@
-import {userRef, auth} from '../firebase';
+import { userRef, auth } from '../firebase';
 
-export const createUser = (email,password) => async dispatch => { 
-                   
-    auth.createUserWithEmailAndPassword(email,password)
-    .then(()=>{
-        auth.signInWithEmailAndPassword(email,password)
-    })
-    .then(()=>{
-        let curr = auth.currentUser;
-        userRef.child(curr.uid).set({
-            email:email,
-            username:email.split("@")[0],
-            uid:curr.uid,
-        })        
-    }).then(()=>{
-        let curr = auth.currentUser;
+export const fetchUser = () => dispatch => {
+    userRef.child(auth.currentUser.uid).on('value', snapshot => {
+        console.log("FETCH USER ACTION");
+        console.log(snapshot.val())
         dispatch({
-            type:'USER-INFO',
-            payload:{
-                email:email,
-                username:email.split("@")[0],
-                uid:curr.uid,
-            }
-        })        
-    })
-    .then(()=>{
-        dispatch({            
-            type:'LOGIN',
-            payload:true,
+            type: 'USER-INFO',
+            payload: snapshot.val()
         })
-    })
-    .catch(() =>{
-        console.log('create error');
-    });
+    }
+    )
 }
 
-export const signInUser = (email,password) => async dispatch => {    
-    auth.signInWithEmailAndPassword(email, password)
-    .then(()=>{
-        userRef.child(auth.currentUser.uid).once("value")
-    .then((snap)=>{
-        dispatch({            
-            type:'USER-INFO',
-            payload:snap.val()
-        })    
-        
-    })
-    .then(()=>{
-        dispatch({
-            type:'LOGIN',
-            payload:true
-        })
-    }) 
-    }).catch(() =>{
-        console.log('Signin error');
+
+export const createUser = (email, password, navigation) => async dispatch => {
+    dispatch({
+        type: 'START-REGISTER',
+        payload: true,
     });
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+            auth.signInWithEmailAndPassword(email, password)
+        })
+        .then(() => {
+            let curr = auth.currentUser;
+            userRef.child(curr.uid).set({
+                email: email,
+                username: email.split("@")[0],
+                uid: curr.uid,
+            })
+        }).then(() => {
+            let curr = auth.currentUser;
+            dispatch({
+                type: 'USER-INFO',
+                payload: {
+                    email: email,
+                    username: email.split("@")[0],
+                    uid: curr.uid,
+                }
+            })
+            dispatch({
+                type: 'START-REGISTER',
+                payload: false,
+            });
+            navigation.navigate('Home')
+        })
+        .then(() => {
+            dispatch({
+                type: 'LOGIN',
+                payload: true,
+            })
+        })
+        .catch(() => {
+            console.log('create error');
+        });
+}
+
+export const signInUser = (email, password, navigation) => async dispatch => {
+    dispatch({
+        type: 'START-LOGIN',
+        payload: true,
+    });
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            dispatch({
+                type: 'LOGIN',
+                payload: true
+            })
+            dispatch({
+                type: 'START-LOGIN',
+                payload: false
+            })
+        }).then(() => {
+            navigation.navigate('Home')
+        })
+        .catch(() => {
+            console.log('Signin error');
+        });
 }
 
 export const signOutUser = () => async dispatch => {
-    auth.signOut().then(()=>{
+    auth.signOut().then(() => {
         dispatch({
-            type:'LOGIN',
-            payload:false,
+            type: 'LOGIN',
+            payload: false,
         })
         dispatch({
-            type:'USER-IFNO',
-            payload:{},
+            type: 'USER-IFNO',
+            payload: {},
         })
     })
-    .catch(() =>{
-        console.log('Signout Error');
-    });
+        .catch(() => {
+            console.log('Signout Error');
+        });
 }
+

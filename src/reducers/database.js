@@ -12,6 +12,7 @@ let defaultState = {
   sensors:{},
   help_nodes:{},
   login:false,
+  isLoading: false,
 }
 
 export default (state = {defaultState}, action) => {
@@ -35,6 +36,15 @@ export default (state = {defaultState}, action) => {
         help_nodes:action.payload.help_nodes,
         sensors:action.payload.sensors,
 
+      }
+    case 'START-LOGIN':
+      return {
+        ...state,
+        isLoading: action.payload,
+      }
+    case 'START-REGISTER':
+      return {
+        isLoadingRegister: action.payload,
       }
     default:
       return defaultState;

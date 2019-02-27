@@ -10,14 +10,21 @@ import reducers from './src/reducers';
 
 import AppNavigator from './src/navigators/AppNavigator';
 
-const store = createStore(reducers, {} ,applyMiddleware(reduxThunk));
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 
 export default class App extends Component {
   render() {
+
     return (
       <Provider store={store}>
-        <AppNavigator/>
+
+        <Text style={{ paddingTop: 20 }}>
+          Menu here
+        </Text>
+        
+        <AppNavigator />
+
       </Provider>
     );
   }
