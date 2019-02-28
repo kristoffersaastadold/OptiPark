@@ -13,10 +13,10 @@ export const fetchUser = () => dispatch => {
 }
 
 
-export const createUser = (email, password, navigation) => async dispatch => {
+export const createUser = (email, password, licencePlate,  navigation) => async dispatch => {
+    console.log("TRying to create user")
     dispatch({
-        type: 'START-REGISTER',
-        payload: true,
+        type: 'START-REGISTER'
     });
     auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
@@ -28,6 +28,7 @@ export const createUser = (email, password, navigation) => async dispatch => {
                 email: email,
                 username: email.split("@")[0],
                 uid: curr.uid,
+                licencePlate: licencePlate,
             })
         }).then(() => {
             let curr = auth.currentUser;
@@ -37,6 +38,7 @@ export const createUser = (email, password, navigation) => async dispatch => {
                     email: email,
                     username: email.split("@")[0],
                     uid: curr.uid,
+                    licencePlate: licencePlate,
                 }
             })
             dispatch({
@@ -51,8 +53,10 @@ export const createUser = (email, password, navigation) => async dispatch => {
                 payload: true,
             })
         })
-        .catch(() => {
-            console.log('create error');
+        .catch((err) => {
+            dispatch({ type: 'REGISTER_ERROR', err });
+            dispatch({ type: 'REGISTER_ERROR_STOP' });
+            
         });
 }
 
@@ -74,8 +78,9 @@ export const signInUser = (email, password, navigation) => async dispatch => {
         }).then(() => {
             navigation.navigate('Home')
         })
-        .catch(() => {
+        .catch((err) => {
             console.log('Signin error');
+            dispatch({ type: 'LOGIN_ERROR', err });
         });
 }
 

@@ -13,6 +13,8 @@ let defaultState = {
   help_nodes:{},
   login:false,
   isLoading: false,
+  authError: '',
+  isLoadingRegister: false,
 }
 
 export default (state = {defaultState}, action) => {
@@ -27,7 +29,8 @@ export default (state = {defaultState}, action) => {
     case 'LOGIN':        
       return {
         ...state,
-        login:action.payload
+        login:action.payload,
+        authError: ''
       };
     case 'GET-GEO':
       return{
@@ -40,11 +43,30 @@ export default (state = {defaultState}, action) => {
     case 'START-LOGIN':
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: true,
+      }
+    case 'LOGIN_ERROR':
+      return {
+        ...state,
+        isLoading: false,
+        authError: action.err.message,
       }
     case 'START-REGISTER':
       return {
-        isLoadingRegister: action.payload,
+        isLoadingRegister: true,
+        authError: '',
+      }
+    case 'REGISTER_ERROR':
+      return {
+        ...state,
+        authError: action.err.message,
+        isLoadingRegister: false,
+
+      }
+    case 'REGISTER_ERROR_STOP':
+      return {
+        ...state,
+        isLoadingRegister: false,
       }
     default:
       return defaultState;

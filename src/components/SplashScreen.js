@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, Image, Platform, StatusBar } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, Platform, StatusBar, ActivityIndicator } from 'react-native';
 import { Dimensions } from "react-native";
 
 
@@ -19,9 +19,9 @@ export class SplashScreen extends Component {
         console.log("mounting")
         setTimeout(() => {
             console.log("navigating")
-            navigate('WelcomeScreen')
+            navigate('LoginScreen')
             console.log("navigating")
-        }, 1000);
+        }, 500);
 
     }
 
@@ -35,7 +35,12 @@ export class SplashScreen extends Component {
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <Text style={styles.text}>OPTIPARK</Text>
+                <View>
+                    <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
+                    <Text style={styles.subText}>Finding your optimal parking</Text>
+                </View>
+                <ActivityIndicator style={styles.spinner} size="large" color="#328ae3" />
+
                 <Image
                     style={styles.stretch}
                     source={{ uri: 'https://www.smartparking.com/media/1427/spjan15-87.jpg' }}
@@ -47,16 +52,36 @@ export class SplashScreen extends Component {
 
 const styles = StyleSheet.create({
     stretch: {
-        width: width,
-        height: 200
+        width: width * 0.85,
+        height: 150,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
     },
-    text: {
-        fontSize: 40,
-        paddingBottom: 70,
+    text1: {
+        fontSize: 50,
         fontWeight: 'bold',
         fontFamily: 'Cochin',
+        textAlign: 'center',
+        color: '#328ae3'
+        
+    },
+    text2: {
+        fontSize: 50,
+        fontWeight: 'bold',
+        fontFamily: 'Cochin',
+        color: 'black',
         textAlign: 'center'
-
+    },
+    subText: {
+        fontWeight: 'bold',
+        fontFamily: 'Cochin',
+        paddingBottom: 30,
+        textAlign: 'center',
+    },
+    spinner: {
+        paddingBottom: 30
     }
 });
 

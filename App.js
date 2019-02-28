@@ -19,9 +19,6 @@ export default class App extends Component {
     return (
       <Provider store={store}>
 
-        <Text style={{ paddingTop: 20 }}>
-          Menu here
-        </Text>
         
         <AppNavigator />
 
