@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Location} from 'expo';
+import {Location, Speech} from 'expo';
 import { StyleSheet, View, Text, Button, ToastAndroid, Image, Dimensions} from 'react-native';
 import MapView,{Marker,Polyline, Callout} from 'react-native-maps';
 import {createGraph,assignSensor, getPolyline, findNodeCoord, angleBetweenPoints, getDirection, determimeDirection, findNodeIndex} from '../functions/DirectFunctions';
@@ -52,7 +52,6 @@ class MapComponent extends Component{
             if(!enabled)console.log("Please enable position");
             else{
                 Location.getCurrentPositionAsync(Location.Accuracy.High).then((position)=>{
-                    console.log("test");
                     console.log(position);
                 })
             }
@@ -68,6 +67,7 @@ class MapComponent extends Component{
        } 
        if (prevState.currPos!=this.state.currPos) {
             this.assignSensor();
+            
        }
     }
 
@@ -102,6 +102,7 @@ class MapComponent extends Component{
         if (direction==="delete") {
             path.splice(1,1);
         }
+        
         let dist = 0;
         for (let i = 1; i < path.length-1; i++) {
             p1 = this.getNodeCoord(path[i][0]);
@@ -114,8 +115,19 @@ class MapComponent extends Component{
                 break
             }
         }
-        console.log(dist, direction);
-        
+        if (path.length===3) {
+            Speech.speak("Take a "+direction+" in "+dist.toFixed(0)+" meters. Then you arrive at your assigned parkinglot", {
+                language:'en',
+                pitch:0.9,
+                rate:0.8,
+            })
+        }else{
+            Speech.speak("Take a "+direction+" in "+dist.toFixed(0)+" meters", {
+                language:'en',
+                pitch:0.9,
+                rate:0.8,
+            })
+        }
 
         this.setState({
             path,
@@ -138,11 +150,6 @@ class MapComponent extends Component{
           show: false,
         });
       };
-
-    selectSpot = (e) => {        
-        
-        
-    }
 
     pressMap = (map) => {
         const latitude = map.nativeEvent.coordinate.latitude;
@@ -169,12 +176,6 @@ class MapComponent extends Component{
         const { currPos, prevPos, currAng } = this.state;
         const currRot = this.getRotation(prevPos,currPos);
         this.map.animateCamera({heading:currRot,center:currPos,pitch:currAng})
-    }
-
-    disableMarker = () => {
-        console.log("test");
-        
-        return null;
     }
 
     render(){
@@ -214,7 +215,6 @@ class MapComponent extends Component{
                         {Object.keys(this.props.sensors).map((item)=>
                             <Marker 
                                 id={this.props.sensors[item].properties.name} 
-                                // onPress={this.selectSpot} 
                                 coordinate={{
                                     latitude:this.props.sensors[item].geometry.coordinates[0],
                                     longitude:this.props.sensors[item].geometry.coordinates[1]}} 
@@ -240,7 +240,6 @@ class MapComponent extends Component{
                                     return(
                                     <Marker 
                                         id={this.props.support[item].properties.name} 
-                                        // onPress={this.selectSpot} 
                                         coordinate={{
                                             latitude:coord[0],
                                             longitude:coord[1]}}

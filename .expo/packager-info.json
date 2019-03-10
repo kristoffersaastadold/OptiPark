@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://v5-kuq.anonymous.optipark.exp.direct",
   "packagerNgrokUrl": "https://packager.v5-kuq.anonymous.optipark.exp.direct",
-  "ngrokPid": 7116,
+  "ngrokPid": 1248,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 18448
+  "packagerPid": 7956
 }
