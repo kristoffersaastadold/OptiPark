@@ -2,8 +2,6 @@ import { userRef, auth } from '../firebase';
 
 export const fetchUser = () => dispatch => {
     userRef.child(auth.currentUser.uid).on('value', snapshot => {
-        console.log("FETCH USER ACTION");
-        console.log(snapshot.val())
         dispatch({
             type: 'USER-INFO',
             payload: snapshot.val()
@@ -28,7 +26,8 @@ export const createUser = (email, password, licencePlate,  navigation) => async 
                 email: email,
                 username: email.split("@")[0],
                 uid: curr.uid,
-                licencePlate: licencePlate,
+                lp: licencePlate,
+                isParked: false,
             })
         }).then(() => {
             let curr = auth.currentUser;
@@ -38,7 +37,8 @@ export const createUser = (email, password, licencePlate,  navigation) => async 
                     email: email,
                     username: email.split("@")[0],
                     uid: curr.uid,
-                    licencePlate: licencePlate,
+                    lp: licencePlate,
+                    isParked:false,
                 }
             })
             dispatch({
@@ -76,10 +76,11 @@ export const signInUser = (email, password, navigation) => async dispatch => {
                 payload: false
             })
         }).then(() => {
+            console.log("NAVIGATING AFTER LOGIN")
             navigation.navigate('Home')
         })
         .catch((err) => {
-            console.log('Signin error');
+            console.log('Signin error', err);
             dispatch({ type: 'LOGIN_ERROR', err });
         });
 }

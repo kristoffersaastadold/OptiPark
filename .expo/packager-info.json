@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://st-t9w.anonymous.optipark.exp.direct",
   "packagerNgrokUrl": "https://packager.st-t9w.anonymous.optipark.exp.direct",
-  "ngrokPid": 69033,
+  "ngrokPid": 73238,
   "devToolsPort": 19002,
-  "packagerPort": null,
-  "packagerPid": null
+  "packagerPort": 19001,
+  "packagerPid": 73219
 }

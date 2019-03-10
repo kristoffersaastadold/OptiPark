@@ -61,6 +61,10 @@ class MapComponent extends Component{
 
     }
 
+    componentDidMount(){
+        this.assignSensor()
+    }
+
     componentDidUpdate(prevProps, prevState){
        if (this.state.show) {
            

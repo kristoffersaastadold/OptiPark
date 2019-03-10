@@ -1,13 +1,17 @@
 
 let defaultState = {
   //from auth
+  /*
   currUser: {},
   //from rtdb
   userInfo: {
     username: "krisaa",
     email: "k@123.no",
-    uid: "123455"
+    uid: "123455",
+    isParked: false,
+
   },
+  */
   login: false,
   isLoading: false,
   authError: '',
