@@ -13,21 +13,16 @@ class DefaultContainer extends Component{
         super(props);
 
         this.state={
-            email:"",
-            password:"",
+            email:"optipark@test.com",
+            password:"optipark",
         }
     }
-
+    
     componentWillMount(){
-        this.props.getGeo();
+        this.props.getGeo("Library");
     }
-    componentDidUpdate(){
-        console.log(this.props);
-        
-    }
-
-    printProp = () => {
-        navigate
+    componentDidMount(){
+        this.props.signInUser(this.state.email,this.state.password,this.props.navigation);
     }
 
     handleEmail = (e) =>{
@@ -43,18 +38,13 @@ class DefaultContainer extends Component{
     }
 
     signIn = () => {        
-        this.props.signInUser(this.state.email,this.state.password)
-        this.props.navigation.navigate('Main');
-        this.setState({
-            email:"",
-            password:""
-        })
+        this.props.signInUser(this.state.email,this.state.password,this.props.navigation);
     }
 
     render(){        
         
         return(
-            <View>
+            <View style={styles.wrapper}>
                 <Input 
                     placeholder="email" 
                     onChange={this.handleEmail}
@@ -113,10 +103,9 @@ const mapDispatchToProps = (dispatch) => {
 
 //Styles
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+    wrapper:{
+        ...StyleSheet.absoluteFill,
+        top:'3.5%',
+        backgroundColor:'transparent'
+    }
   });

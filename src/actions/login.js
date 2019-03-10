@@ -1,5 +1,15 @@
 import {userRef, auth} from '../firebase';
 
+export const fetchUser = () => async dispatch => {
+    userRef.child(auth.currentUser.uid).on('value',snapshot=>{
+        dispatch({
+            type:'USER-INFO',
+            payload:snapshot.val()
+        })
+    })
+}
+
+
 export const createUser = (email,password) => async dispatch => { 
                    
     auth.createUserWithEmailAndPassword(email,password)
@@ -35,36 +45,32 @@ export const createUser = (email,password) => async dispatch => {
     });
 }
 
-export const signInUser = (email,password) => async dispatch => {    
+export const signInUser = (email,password, navigation) => async dispatch => {    
     auth.signInWithEmailAndPassword(email, password)
-    .then(()=>{
-        userRef.child(auth.currentUser.uid).once("value")
-    .then((snap)=>{
-        dispatch({            
-            type:'USER-INFO',
-            payload:snap.val()
-        })    
-        
-    })
     .then(()=>{
         dispatch({
             type:'LOGIN',
             payload:true
         })
-    }) 
-    }).catch(() =>{
-        console.log('Signin error');
+    })
+    .then(()=>{
+        navigation.navigate('Main');
+    })
+    .catch((err) =>{
+        console.log('Signin error',err);
     });
 }
 
-export const signOutUser = () => async dispatch => {
-    auth.signOut().then(()=>{
+export const signOutUser = (navigation) => async dispatch => {
+    auth.signOut()
+    .then(()=>{
+        navigation.navigate('Login');
         dispatch({
             type:'LOGIN',
             payload:false,
         })
         dispatch({
-            type:'USER-IFNO',
+            type:'USER-INFO',
             payload:{},
         })
     })
