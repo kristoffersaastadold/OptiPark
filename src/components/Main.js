@@ -16,7 +16,22 @@ class Main extends Component{
         this.props.signOutUser(this.props.navigation);  
     }
 
+    componentDidUpdate(prevProps, prevState){
+        if (prevState.loading!=this.state.loading) {
+            setTimeout(() => {
+                navigate
+            }, 1000);
+        }
+    }
+
     render(){
+        if(this.props.userInfo){
+            if(this.props.userInfo.isParked){
+                this.setState({
+                    loading:true,
+                })
+            }
+        }
         return(
                 this.props.login?
                 <View style={styles.wrapper}>

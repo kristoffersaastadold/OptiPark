@@ -2,10 +2,15 @@ import {geoRef} from '../firebase';
 
 export const getGeo = (name) => async dispatch =>{
     geoRef.child(name).on('value',snapshot =>{
+        console.log(snapshot.val());
+        
         dispatch({
             type:'GET-GEO',
             payload:snapshot.val()
         })
+    }).catch((err)=>{
+        console.log("get geo fail",err);
+        
     })
 }
 
