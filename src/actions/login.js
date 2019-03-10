@@ -84,12 +84,13 @@ export const signInUser = (email, password, navigation) => async dispatch => {
         });
 }
 
-export const signOutUser = () => async dispatch => {
+export const signOutUser = (navigation) => async dispatch => {
     auth.signOut().then(() => {
         dispatch({
             type: 'LOGIN',
             payload: false,
         })
+        navigation.navigate('WelcomeScreen')
         dispatch({
             type: 'USER-IFNO',
             payload: {},

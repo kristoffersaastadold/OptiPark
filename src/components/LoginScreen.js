@@ -5,7 +5,6 @@ import { StyleSheet, View, Text, Button, ActivityIndicator, TouchableOpacity, Im
 import { Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { getGeo } from "../actions/geo";
 import { signInUser } from '../actions/login';
 import { fetchUser } from '../actions/login';
 import { Dimensions } from "react-native";
@@ -25,7 +24,6 @@ class LoginScreen extends Component {
     }
 
     componentWillMount() {
-        this.props.getGeo();
         console.log("WILL MOUNT")
         this.props.signInUser("opti@park.com", "optipark", this.props.navigation);
         
@@ -137,7 +135,7 @@ const mapStateToProps = (reducer) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ getGeo, signInUser, fetchUser }, dispatch);
+    return bindActionCreators({ signInUser, fetchUser }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

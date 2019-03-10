@@ -18,6 +18,8 @@
     "react-native-elements": "^1.0.0",
     "react-native-firebase": "^5.2.2",
     "react-native-maps": "^0.23.0",
+    "react-native-svg-charts": "^5.2.0",
+    "react-native-tts": "^2.0.0",
     "react-navigation": "^3.3.0",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",

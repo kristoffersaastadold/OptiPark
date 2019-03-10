@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, Image, Platform, StatusBar, ActivityIndicator } from 'react-native';
 import { Dimensions } from "react-native";
-
+import {getGeo} from '../actions/geo';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full heigh
@@ -15,13 +17,12 @@ export class SplashScreen extends Component {
     }
     t
     componentWillMount() {
+        console.log("test");
         const { navigate } = this.props.navigation;
+        this.props.getGeo("Library", navigate);
+
         console.log("mounting")
-        setTimeout(() => {
-            console.log("navigating")
-            navigate('LoginScreen')
-            console.log("navigating")
-        }, 500);
+        
 
     }
 
@@ -85,4 +86,12 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SplashScreen;
+const mapStateToProps = (state) => {
+    
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({getGeo}, dispatch);
+  }
+
+  export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

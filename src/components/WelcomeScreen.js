@@ -5,7 +5,7 @@ import { Dimensions } from "react-native";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full heigh
-
+import { Speech } from 'expo';
 export class WelcomeScreen extends Component {
 
 
@@ -16,7 +16,7 @@ export class WelcomeScreen extends Component {
     }
     t
     componentWillMount() {
-
+        // Speech.speak("Welcome to OptiPark - the app that finds the best parking spot available for you.");
     }
 
 
@@ -24,6 +24,7 @@ export class WelcomeScreen extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+
 
         return (
             <View style={{
@@ -44,16 +45,16 @@ export class WelcomeScreen extends Component {
                         justifyContent: 'center', borderRadius: 5, marginTop: 50,
                     }}
                     >
-                        <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold'}}>Go to Login</Text>
+                        <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>Go to Login</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { navigate('RegisterScreen') }}>
                     <View style={{
                         backgroundColor: '#328ae3', alignItems: 'center', width: 200, height: 40,
-                        justifyContent: 'center', borderRadius: 5,marginTop: 20,
+                        justifyContent: 'center', borderRadius: 5, marginTop: 20,
                     }}
                     >
-                        <Text style={{ color: 'white', fontSize: 18 , fontWeight: 'bold'}}>Register</Text>
+                        <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>Register</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
         height: width * 0.45,
         marginTop: 40,
         marginBottom: 20,
-        
+
     },
     text: {
         fontSize: 40,

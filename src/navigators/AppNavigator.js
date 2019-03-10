@@ -4,10 +4,17 @@ import RegisterScreen from '../components/RegisterScreen';
 import Home from '../components/Home';
 import SplashScreen from '../components/SplashScreen';
 import WelcomeScreen from '../components/WelcomeScreen';
+import MapComponent from '../components/MapComponent';
 
 const MainNavigator = createStackNavigator({
     SplashScreen: {
         screen: SplashScreen,
+        navigationOptions: {
+            headerLeft: null
+        }
+    },
+    MapComponent: {
+        screen: MapComponent,
         navigationOptions: {
             headerLeft: null
         }
