@@ -39,7 +39,7 @@ export class Home extends Component {
 
   componentDidUpdate(prevProps, prevState) {
 
-    if (prevPorps.userInfo.isParked !== this.props.userInfo.isParked) {
+    if (prevProps.userInfo.isParked !== this.props.userInfo.isParked) {
       if (this.state.loading) {
         setTimeout(() => {
           this.props.navigation.navigate('Map')
