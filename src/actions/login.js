@@ -45,7 +45,7 @@ export const createUser = (email, password, licencePlate,  navigation) => async 
                 type: 'START-REGISTER',
                 payload: false,
             });
-            navigation.navigate('Home')
+            navigation.navigate('TabNavigator')
         })
         .then(() => {
             dispatch({
@@ -77,7 +77,7 @@ export const signInUser = (email, password, navigation) => async dispatch => {
             })
         }).then(() => {
             console.log("NAVIGATING AFTER LOGIN")
-            navigation.navigate('Home')
+            navigation.navigate('TabNavigator')
         })
         .catch((err) => {
             console.log('Signin error', err);

@@ -5,6 +5,15 @@ import { fetchUser } from '../actions/login';
 import MapComponent from './MapComponent'
 import { bindActionCreators } from 'redux';
 
+const LoadingSession = (props) => {
+  return(
+    <View>
+      <ActivityIndicator style={styles.spinner} size="large" color="#4dd6de" />
+    </View>
+    
+  )
+}
+
 export class Home extends Component {
 
 
@@ -25,45 +34,24 @@ export class Home extends Component {
 
     console.log("MOUNTING", this.props.login, this.props.userInfo);
 
-
-   
-
   }
 
 
   componentDidUpdate(prevProps, prevState) {
-    
-    if (prevState.loading !== this.state.loading) {
-      setTimeout(() => {
 
-        this.props.navigation.navigate('MapComponent')
-      }, 2000)
+    if (prevPorps.userInfo.isParked !== this.props.userInfo.isParked) {
+      if (this.state.loading) {
+        setTimeout(() => {
+          this.props.navigation.navigate('Map')
+        }, 2000)
+      }else{
+        this.setState({loading:false})
+      }
     }
     
   }
 
   render() {
-    if (this.props.userInfo && !this.state.loading) {
-      if (this.props.userInfo.isParked) {
-        this.setState({
-          loading: true,
-        })
-      }
-    }
-    const { navigate } = this.props.navigation;
-    console.log(this.props.userInfo);
-    let previousParkings;
-    let activeParkings;
-    let licencePlate;
-    let history;
-    if (this.props.userInfo) {
-      previousParkings = this.props.userInfo.history;
-      activeParkings = this.props.userInfo.parkings;
-      if (this.props.userInfo.cars) {
-        licencePlate = this.props.userInfo.cars.lp;
-      }
-    }
-
 
     //{licencePlate ? <Text>{licencePlate}</Text> : <Text>No licencePlate</Text>}
     // 
@@ -79,7 +67,8 @@ export class Home extends Component {
         {this.state.loading ? <ActivityIndicator style={styles.spinner} size="large" color="#4dd6de" /> : null}
         
 
-        <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
+
+        {/* <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
         <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
         <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
         <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
@@ -91,38 +80,7 @@ export class Home extends Component {
         <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
         <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
         {licencePlate ? <Text>Registered licence plate number: <Text style={styles.subText}>{licencePlate}</Text></Text> : <Text>No licencePlate</Text>}
-
-        <View style={{ paddingTop: 15 }}></View>
-        {activeParkings ? <Text>You have the following active parking sessions: </Text> : <Text>You have no parkings</Text>}
-        {activeParkings ?
-          <View>
-            {
-              Object.keys(activeParkings).map((activeParking) =>
-                //projects in case we don't have any projects
-                <Text style={styles.activeParking} key={activeParking.imgId}>
-                  {activeParkings[activeParking].lp}
-
-                </Text>
-              )
-            }</View>
-          : <Text>No parking</Text>
-        }
-
-        <View style={{ paddingTop: 15 }}></View>
-        {previousParkings ? <Text>You have the following previous parking sessions: </Text> : <Text>You have no parkings</Text>}
-        {previousParkings ?
-          <View>
-            {
-              Object.keys(previousParkings).map((previousParking) =>
-                //projects in case we don't have any projects
-                <Text style={styles.parking} key={previousParking.imgId}>
-                  {previousParkings[previousParking].lp}
-
-                </Text>
-              )
-            }</View>
-          : <Text>No parking</Text>
-        }
+        */}
       </ScrollView>
     )
   }
@@ -191,5 +149,5 @@ const styles = StyleSheet.create({
   subText: {
     fontWeight: 'bold',
     fontFamily: 'Cochin',
-  }
+  },
 });

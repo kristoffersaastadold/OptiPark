@@ -1,10 +1,9 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import LoginScreen from '../components/LoginScreen';
 import RegisterScreen from '../components/RegisterScreen';
-import Home from '../components/Home';
 import SplashScreen from '../components/SplashScreen';
 import WelcomeScreen from '../components/WelcomeScreen';
-import MapComponent from '../components/MapComponent';
+import TabNavigator from './TabNavigator';
 
 const MainNavigator = createStackNavigator({
     SplashScreen: {
@@ -13,14 +12,8 @@ const MainNavigator = createStackNavigator({
             headerLeft: null
         }
     },
-    MapComponent: {
-        screen: MapComponent,
-        navigationOptions: {
-            headerLeft: null
-        }
-    },
-    Home: {
-        screen: Home,
+    TabNavigator: {
+        screen: TabNavigator,
         navigationOptions: {
             headerLeft: null
         }
