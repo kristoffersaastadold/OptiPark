@@ -19,8 +19,10 @@ export class SplashScreen extends Component {
     componentWillMount() {
         console.log("test");
         const { navigate } = this.props.navigation;
-        this.props.getGeo("Library", navigate);
-
+        this.props.getGeo("Library");
+        setTimeout(() => {
+            navigate('WelcomeScreen')
+        }, 1000);
         console.log("mounting")
         
 

@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import {Location, Speech} from 'expo';
 import { StyleSheet, View, Text, Button, ToastAndroid, Image, Dimensions} from 'react-native';
 import MapView,{Marker,Polyline, Callout} from 'react-native-maps';
-import {createGraph,assignSensor, getPolyline, findNodeCoord, angleBetweenPoints, getDirection, determimeDirection, findNodeIndex} from '../functions/DirectFunctions';
-import {getGeo, assignSpot} from '../actions/geo';
+import {createGraph,assignSensor, getPolyline, findNodeCoord, angleBetweenPoints, getDirection, determimeDirection, findNodeIndex, distance} from '../functions/DirectFunctions';
+import {getGeo, assignSpot, changeSpotStatus} from '../actions/geo';
 import {signOutUser} from '../actions/login';
 import avaliableMarker from '../images/avaliable.png';
 import takenMarker from '../images/taken.png';
@@ -13,7 +13,6 @@ import carIcon from '../images/carIcon2.png';
 import suppMarker from '../images/node.png';
 import rightIcon from '../images/rightIcon.png'
 import leftIcon from '../images/leftIcon.png'
-
 
 const Toast = (props) => {
     if(props.visible){
@@ -103,6 +102,42 @@ class MapComponent extends Component{
         const assigned = assignSensor(this.state.g,this.props.sensors,this.props.support,[this.state.currPos.latitude,this.state.currPos.longitude])
         const spot = assigned[0];
         const path  = assigned[1];
+        if(spot.length===0&& path.length===0){
+            Speech.speak("The parkinglot is full", {
+                language:'en',
+                pitch:0.9,
+                rate:0.8,
+            })
+            ToastAndroid.showWithGravity(
+                "The parking lot is full",
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+            );
+            return null;
+        }
+        
+        console.log(distance([this.state.currPos.latitude, this.state.currPos.longitude],findNodeCoord(this.props.sensors,spot)));
+        
+        if (distance([this.state.currPos.latitude, this.state.currPos.longitude],findNodeCoord(this.props.sensors,spot))<4) {
+            Speech.speak("You have arrived at your destination", {
+                language:'en',
+                pitch:0.9,
+                rate:0.8,
+            })
+            ToastAndroid.showWithGravity(
+                "You have arrived at your destination",
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+            );
+            this.props.changeSpotStatus("Library", findNodeIndex(this.props.sensors,spot),1);
+            this.setState({path:null, direction:null, currDistance:null, spot, totDistance:null,showDistance:false, latlngs:null})
+            setTimeout(() => {
+                this.props.navigation.navigate("Home")
+            }, 1000);
+            return null;
+        }
+        console.log("not");
+        
 
         //Finding point coordinates to find angle between first->second, and second-> third
         let p1 = this.getNodeCoord(path[1][0]);
@@ -321,7 +356,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({getGeo, assignSpot, signOutUser}, dispatch);
+    return bindActionCreators({getGeo, assignSpot, signOutUser, changeSpotStatus}, dispatch);
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(MapComponent);

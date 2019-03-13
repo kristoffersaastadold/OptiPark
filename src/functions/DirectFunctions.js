@@ -4,8 +4,7 @@ export const latlngDist = (from, to) => {
     return Math.sqrt(Math.pow(from[0]-to[0],2)+Math.pow(from[1]-to[1],2))
 }
 
-export const distance = (from, to) =>{
-    
+export const distance = (from, to) =>{    
     let nfrom = [from[0]*Math.PI/180, from[1]*Math.PI/180];
     let nto  = [to[0]*Math.PI/180,to[1]*Math.PI/180];
 

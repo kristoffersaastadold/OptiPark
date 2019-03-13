@@ -7,9 +7,7 @@ export const getGeo = (name, navigate) => async dispatch =>{
             type:'GET-GEO',
             payload:snapshot.val()
         })
-        setTimeout(() => {
-            navigate('WelcomeScreen')
-        }, 1000);
+        
     }).catch(err => {
         console.log("get geo fail", err);
     })
@@ -27,4 +25,8 @@ export const assignSpot = (path, spot) => dispatch => {
             path:path,
         }
     })
+}
+
+export const changeSpotStatus = (name,spotIndex, status) => async dispatch =>{
+    geoRef.child(name+"/sensors/"+spotIndex+"/properties").update({status:status});
 }
