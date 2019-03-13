@@ -306,7 +306,6 @@ class MapComponent extends Component{
 }
 
 const mapStateToProps = (state) => {
-    console.log("state", state);
     const {login, sensors, support, entrance, corners} = state.database;    
     const {path, sensor} = state.global
     

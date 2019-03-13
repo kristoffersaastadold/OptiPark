@@ -1,6 +1,7 @@
 import { userRef, auth } from '../firebase';
 
 export const fetchUser = () => dispatch => {
+    console.log("CHANGE");
     userRef.child(auth.currentUser.uid).on('value', snapshot => {
         dispatch({
             type: 'USER-INFO',

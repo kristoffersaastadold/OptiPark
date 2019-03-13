@@ -7,6 +7,12 @@ let defaultState = {
 
 const global = (state = defaultState, action) => {
     switch (action.type) {
+        case 'START-SESSION':{
+            return{
+                ...state,
+                isParked:action.payload
+            }
+        }
         case 'SET-SELECTED':
             return{
                 ...state,

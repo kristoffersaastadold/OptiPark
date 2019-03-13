@@ -16,7 +16,9 @@ export class WelcomeScreen extends Component {
     }
     t
     componentWillMount() {
-        // Speech.speak("Welcome to OptiPark - the app that finds the best parking spot available for you.");
+        setTimeout(() => {
+            this.props.navigation.navigate('LoginScreen')
+        }, 2000);
     }
 
 

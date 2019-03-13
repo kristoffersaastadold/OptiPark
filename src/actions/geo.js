@@ -7,12 +7,9 @@ export const getGeo = (name, navigate) => async dispatch =>{
             type:'GET-GEO',
             payload:snapshot.val()
         })
-        console.log("navigating")
-        navigate('LoginScreen')
-
-
-    }).then(() => {
-        navigate('Home')
+        setTimeout(() => {
+            navigate('WelcomeScreen')
+        }, 1000);
     }).catch(err => {
         console.log("get geo fail", err);
     })

@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Platform, StatusBar, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, Button, Platform, StatusBar, StyleSheet, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchUser } from '../actions/login';
 import MapComponent from './MapComponent'
 import { bindActionCreators } from 'redux';
 import { AreaChart, XAxis, BarChart, Grid } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
+import { auth } from 'firebase';
+import { Dimensions } from 'react-native'
+
+var width = Dimensions.get('window').width;
 
 const LoadingSession = (props) => {
   return(
     <View>
+      {/* <Text>Loading navigation session</Text> */}
       <ActivityIndicator style={styles.spinner} size="large" color="#4dd6de" />
     </View>
     
@@ -29,6 +34,8 @@ export class Home extends Component {
 
   componentWillMount() {
     this.props.fetchUser();
+
+    this.setState({loading:false})
   }
 
 
@@ -42,13 +49,15 @@ export class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevPorps.userInfo.isParked !== this.props.) {
-      if (this.state.loading) {
+    console.log(this.state.loading);
+    
+    if (this.props.userInfo!==prevProps.userInfo) {
+      console.log("CHECKCHANGE");
+      if(this.props.userInfo.isParked){
+        this.setState({loading:true})
         setTimeout(() => {
           this.props.navigation.navigate('Map')
         }, 2000)
-      }else{
-        this.setState({loading:false})
       }
     }
   }
@@ -56,7 +65,10 @@ export class Home extends Component {
 
     return (
       <ScrollView style={{ paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
+
         {this.state.loading ? <LoadingSession/> : null}
+        <Text style={styles.text1}>OPTI<Text style={styles.text2}>PARK</Text></Text>
+        <Image source={require('../../assets/graph.png')  } style={styles.image} />
         {/*
 
         <BarChart
@@ -129,6 +141,12 @@ const styles = StyleSheet.create({
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  image: {
+    width: width *0.9,
+    height: 200,
+    marginLeft: 20, 
+    marginTop: 50,
   },
   activeParking: {
     paddingTop: 5,

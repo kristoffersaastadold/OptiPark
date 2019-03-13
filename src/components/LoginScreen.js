@@ -18,14 +18,16 @@ class LoginScreen extends Component {
         super(props);
 
         this.state = {
-            email: "",
-            password: "",
+            email: "opti@park.com",
+            password: "optipark",
         }
     }
 
     componentWillMount() {
         console.log("WILL MOUNT")
-        this.props.signInUser("opti@park.com", "optipark", this.props.navigation);
+        setTimeout(() => {
+            this.props.signInUser("opti@park.com", "optipark", this.props.navigation); 
+        }, 1000);
         
         // only if successfull
     }
